@@ -21,16 +21,27 @@ const uri = process.env.MONGO_URL;
 
 const app = express();
 
-// 1. CORS MUST BE FIRST (so preflight OPTIONS requests pass instantly)
+// 1. Dynamic CORS setup for all Vercel and local origins
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:3001",
+  "https://finvest-b7jx.vercel.app",
+  "https://finvest-xfvb.vercel.app",
+  "https://finvest-8vuo.vercel.app",
+  process.env.FRONTEND_URL,
+  process.env.DASHBOARD_URL,
+].filter(Boolean);
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "http://localhost:3001",
-      "https://finvest-b7jx.vercel.app",
-      process.env.FRONTEND_URL,
-      process.env.DASHBOARD_URL,
-    ],
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) !== -1 || origin.endsWith(".vercel.app")) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -110,8 +121,8 @@ app.post("/signup", async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: true,   // Required for cross-site Vercel domains
-      sameSite: "none", // Required for cross-site Vercel domains
+      secure: true,
+      sameSite: "none",
     });
     
     return res.status(201).json({ message: "Signed up successfully", success: true, token });
