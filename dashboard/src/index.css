@@ -1,0 +1,757 @@
+/* 1. CORE APP RESET */
+
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  background-color: #f4f6f8;
+  color: #444;
+  overflow: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+/* Utilities */
+.text-green,
+.profit {
+  color: #28a745 !important;
+}
+.text-red,
+.loss {
+  color: #dc3545 !important;
+}
+.text-muted {
+  color: #9b9b9b;
+}
+
+/* 2. HEADER (TopBar) */
+
+.topbar-container {
+  width: 100%;
+  height: 60px;
+  background-color: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Left Pane: Indices */
+.indices-container {
+  flex: 0 0 32%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+  border-right: 1px solid #e0e0e0;
+  background: #fff;
+}
+
+.nifty,
+.sensex {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+.index-points {
+  color: #dc3545;
+  margin-left: 5px;
+}
+
+/* RIGHT PANE: LOGO + MENU + PROFILE */
+
+.menu-container {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  height: 100%;
+}
+
+.menus {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.menus img {
+  width: 25px;
+  margin-right: 20px;
+}
+
+.menus ul {
+  display: flex;
+  gap: 30px;
+}
+
+.menu-item {
+  color: #666;
+  font-size: 0.9rem;
+  font-weight: 400;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.menu-item:hover,
+.menu-selected {
+  color: #ff5722;
+  font-weight: 500;
+}
+
+/* PROFILE SECTION */
+
+.profile {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  height: 100%;
+  padding-left: 20px;
+  border-left: 1px solid #f1f1f1;
+}
+
+.avatar {
+  width: 28px;
+  height: 28px;
+  background-color: #fce8e8;
+  color: #ff5722;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.username {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #444;
+}
+
+/* THE POPUP DROPDOWN */
+
+.profile-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 260px;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+  z-index: 2000;
+  border-radius: 0 0 4px 4px;
+}
+
+.popup-header {
+  padding: 15px 20px;
+  background-color: #fbfbfb;
+  border-bottom: 1px solid #eee;
+}
+
+.popup-username {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 2px;
+}
+
+.popup-email {
+  font-size: 0.8rem;
+  color: #888;
+  word-wrap: break-word;
+}
+
+.popup-item {
+  padding: 12px 20px;
+  font-size: 0.9rem;
+  color: #444;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background-color 0.1s;
+}
+
+.popup-item:hover {
+  background-color: #f5f5f5;
+  color: #ff5722;
+}
+
+/* 3. DASHBOARD LAYOUT */
+
+.dashboard-container {
+  width: 100%;
+  height: calc(100vh - 60px);
+  display: flex;
+}
+
+/* Left Sidebar */
+
+.watchlist-container {
+  width: 32%;
+  min-width: 300px;
+  height: 100%;
+  border-right: 1px solid #e0e0e0;
+  background: #fff;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Right Content */
+
+.content {
+  flex: 1;
+  height: 100%;
+  overflow-y: auto;
+  padding: 30px;
+  background-color: #fff;
+}
+
+/* 4. WATCHLIST STYLES */
+
+.search-container {
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search {
+  width: 100%;
+  padding: 12px 15px;
+  padding-right: 50px;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  outline: none;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.counts {
+  position: absolute;
+  right: 35px;
+  font-size: 0.8rem;
+  color: #999;
+}
+
+.list li {
+  padding: 15px 20px;
+  border-bottom: 1px solid #f9f9f9;
+  cursor: pointer;
+  position: relative;
+  height: 60px;
+  display: flex;
+  align-items: center;
+}
+.list li:hover {
+  background-color: #f9f9f9;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  font-size: 0.85rem;
+}
+.item-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: right;
+}
+.up {
+  color: #28a745;
+}
+.down {
+  color: #dc3545;
+}
+
+/* Hover Actions */
+
+.actions {
+  position: absolute;
+  right: 10px;
+  top: 0;
+  height: 100%;
+  display: none;
+  align-items: center;
+  gap: 8px;
+  background: #f9f9f9;
+  padding-left: 15px;
+}
+.list li:hover .actions {
+  display: flex;
+}
+
+.buy,
+.sell {
+  border: none;
+  padding: 6px 12px;
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.75rem;
+}
+.buy {
+  background-color: #4184f3;
+}
+.sell {
+  background-color: #ff5722;
+}
+
+/* 5. TABLES & SUMMARY */
+
+.title {
+  font-size: 1.4rem;
+  color: #444;
+  font-weight: 500;
+  margin-bottom: 25px;
+}
+
+.order-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.order-table th {
+  text-align: right;
+  padding: 12px 10px;
+  color: #999;
+  font-size: 0.8rem;
+  font-weight: 400;
+  border-bottom: 1px solid #eee;
+}
+.order-table td {
+  text-align: right;
+  padding: 16px 10px;
+  font-size: 0.9rem;
+  color: #444;
+  border-bottom: 1px solid #f5f5f5;
+}
+.order-table th:first-child,
+.order-table td:first-child {
+  text-align: left;
+}
+
+.section {
+  margin-bottom: 40px;
+}
+.divider {
+  border-top: 1px solid #eee;
+  margin: 30px 0;
+}
+.data {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.first h3 {
+  font-size: 2.2rem;
+  font-weight: 300;
+  margin: 0;
+  color: #444;
+}
+.first p {
+  font-size: 0.85rem;
+  color: #999;
+  margin-top: 5px;
+}
+
+/* HOLDINGS FOOTER STATS */
+
+.row {
+  display: flex !important;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.col {
+  flex: 1;
+  text-align: left;
+}
+
+.col h5 {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: #444;
+  margin: 0 0 5px 0;
+}
+
+.col p {
+  font-size: 0.85rem;
+  color: #9b9b9b;
+  margin: 0;
+}
+
+/* 6. TICKET BUTTON */
+
+.ticket-btn {
+  width: auto !important;
+  background-color: #4184f3;
+  border: none;
+  padding: 8px 25px;
+  color: white;
+  border-radius: 3px;
+  font-weight: 500;
+  min-width: 120px;
+}
+.ticket-btn:hover {
+  background-color: #357ae8;
+}
+
+/* 7. POPUPS (Buy/Sell) */
+
+.container {
+  width: 350px;
+  background: white;
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5000;
+  border-radius: 4px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  border: 1px solid #ddd;
+}
+.container .header {
+  padding: 15px 20px;
+  color: white;
+}
+.regular-order {
+  padding: 20px;
+}
+.inputs {
+  display: flex;
+  gap: 15px;
+  margin: 20px 0;
+}
+.inputs input {
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  width: 80px;
+}
+.buttons {
+  padding: 15px 20px;
+  background: #f9f9f9;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.btn-blue {
+  background-color: #4184f3;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+}
+.btn-red {
+  background-color: #ff5722;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+}
+.btn-grey {
+  background-color: #eee;
+  color: #444;
+  padding: 8px 20px;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+}
+
+/* 8. RESPONSIVENESS (Mobile/Tablet) */
+
+@media (max-width: 900px) {
+  .watchlist-container {
+    width: 40%;
+  }
+  .indices-container {
+    flex: 0 0 40%;
+  }
+  .menus ul {
+    gap: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .dashboard-container {
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+  }
+
+  /* Buy and Sell button */
+
+  .list li {
+    height: auto;
+    padding: 15px 10px;
+  }
+
+  .actions {
+    display: flex;
+    position: relative;
+    right: 0;
+    margin-top: 10px;
+    background: transparent;
+    padding-left: 0;
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  /* Header */
+
+  .topbar-container {
+    height: auto;
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .indices-container {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #eee;
+    padding: 10px 20px;
+    justify-content: space-between;
+  }
+
+  .menu-container {
+    width: 100%;
+    padding: 10px 0;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .menus {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .menus ul {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    justify-content: flex-start !important;
+    padding: 0 20px;
+    margin: 0;
+    width: 100%;
+  }
+
+  .menus ul::-webkit-scrollbar {
+    display: none;
+  }
+
+  .profile {
+    display: none;
+  }
+
+  /* Watchlist */
+
+  .watchlist-container {
+    width: 100%;
+    height: 350px;
+    border-right: none;
+    border-bottom: 1px solid #eee;
+  }
+
+  /* Content */
+
+  .content {
+    width: 100%;
+    max-width: 100vw;
+    padding: 20px;
+    overflow-x: hidden;
+  }
+
+  /* Ticket Button Mobile */
+
+  .ticket-btn {
+    display: block !important;
+    margin-top: 10px;
+    width: 100% !important;
+  }
+
+  /* Footer Stats Stack on Mobile */
+
+  .row {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+/* Responsive Mobile */
+
+@media (max-width: 600px) {
+  .funds {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .funds .btn-container {
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  .btn-green,
+  .btn-blue {
+    flex: 1;
+    text-align: center;
+    margin-left: 0;
+    margin-right: 10px;
+  }
+}
+
+/* TABLE RESPONSIVENESS */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 20px;
+  box-shadow: inset -10px 0 10px -10px rgba(0, 0, 0, 0.1);
+}
+
+.table-wrapper table {
+  min-width: 700px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* FUNDS PAGE */
+
+.funds {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.funds p {
+  font-size: 1.1rem;
+  color: #444;
+  font-weight: 400;
+  margin: 0;
+}
+
+.btn-container {
+  display: flex;
+  gap: 15px;
+}
+
+.btn-green,
+.btn-blue {
+  padding: 10px 25px;
+  border-radius: 3px;
+  font-weight: 500;
+  text-decoration: none;
+  font-size: 0.95rem;
+  display: inline-block;
+}
+
+.btn-green {
+  background-color: #4caf50;
+  color: white;
+}
+.btn-blue {
+  background-color: #4184f3;
+  color: white;
+}
+
+.commodity {
+  text-align: center;
+  margin-top: 50px;
+  padding: 20px;
+}
+
+.commodity p {
+  color: #999;
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.commodity .btn-blue {
+  display: inline-block;
+  margin: 0 auto;
+}
+
+/* CHART RESPONSIVENESS */
+.chart-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-top: 20px;
+  padding-bottom: 25px;
+}
+
+.chart-wrapper > div {
+  min-width: 700px !important;
+  min-height: 250px !important;
+  position: relative;
+}
+
+.chart-wrapper canvas {
+  min-width: 600px !important;
+}
+
+/* GLOBAL OVERFLOW LOCKDOWN */
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+#root {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
