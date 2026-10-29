@@ -27,6 +27,7 @@ app.use(
     origin: [
       "http://localhost:3000",
       "http://localhost:3001",
+      "https://finvest-b7jx.vercel.app",
       process.env.FRONTEND_URL,
       process.env.DASHBOARD_URL,
     ],
