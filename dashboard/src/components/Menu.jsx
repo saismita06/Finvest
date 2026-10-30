@@ -13,24 +13,27 @@ const Menu = () => {
 
   const handleLogout = async () => {
     try {
+      const backendUrl = import.meta.env.VITE_BACKEND_URL || "https://finvest-u33e.vercel.app";
+      const frontendUrl = import.meta.env.VITE_FRONTEND_URL || "https://finvest-b7jx.vercel.app";
+
       await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/logout`,
-       // {},
-       // { withCredentials: true },
+        `${backendUrl}/logout`,
+        {},
+        { withCredentials: true }
       );
 
       localStorage.removeItem("token");
-
       localStorage.removeItem("username");
       localStorage.removeItem("email");
-      window.location.href = `${import.meta.env.VITE_FRONTEND_URL}/login`;
+      window.location.href = `${frontendUrl}/login`;
     } catch (error) {
       console.error("Logout failed", error);
 
       localStorage.removeItem("token");
       localStorage.removeItem("username");
       localStorage.removeItem("email");
-      window.location.href = `${import.meta.env.VITE_FRONTEND_URL}/login`;
+      const frontendUrl = import.meta.env.VITE_FRONTEND_URL || "https://finvest-b7jx.vercel.app";
+      window.location.href = `${frontendUrl}/login`;
     }
   };
 
