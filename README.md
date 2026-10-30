@@ -5,7 +5,6 @@
 ![Node](https://img.shields.io/badge/Backend-Node.js%20%2B%20Express-339933)
 ![Status](https://img.shields.io/badge/Status-Live-success)
 
-**Live Demo:** [Click here to view the live application](https://stock-trading-platform-drab.vercel.app)
 
 A comprehensive, responsive stock trading dashboard built with the MERN stack. This platform allows users to create secure accounts, track a mock portfolio, and execute simulated buy/sell orders in a realistic trading environment.
 
@@ -51,9 +50,3 @@ Given the data-heavy nature of financial applications, future updates planned fo
 ## 💻 Local Installation & Setup
 
 If you wish to run this project locally, follow these steps:
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/PARTHA-MAJI/Stock-Trading-Platform
-```
