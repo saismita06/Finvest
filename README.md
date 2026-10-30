@@ -50,3 +50,4 @@ Given the data-heavy nature of financial applications, future updates planned fo
 ## 💻 Local Installation & Setup
 
 If you wish to run this project locally, follow these steps:
+git clone https://github.com/saismita06/Finvest.git
